@@ -14,12 +14,20 @@ function App() {
       .then(data => {
         setAccountBalance(data.accountBalance);
         setBankBalance(data.bankBalance);
+      })
+      .catch(error => {
+        console.error('Error fetching balances', error);
       });
 
     // Fetch transaction history
     fetch('/api/transactions')
       .then(response => response.json())
-      .then(data => setTransactions(data));
+      .then(data =>{
+        setTransactions(data)
+      })
+      .catch(error => {
+        console.error('Error fetching transactions', error);
+      });
   }, []);
 
   const handleWithdraw = () => {
@@ -36,6 +44,9 @@ function App() {
       // Assume balances are returned in response for simplicity
       setAccountBalance(prev => prev - withdrawAmount);
       setBankBalance(prev => prev + withdrawAmount);
+    })
+    .catch(error => {
+      console.error('Error fetching balances', error);
     });
   };
 
